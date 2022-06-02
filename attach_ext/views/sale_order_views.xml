@@ -3,21 +3,6 @@
     <data>
 
         <!-- Inherit Form View to Modify Sale Type -->
-        <record id="sale_type_inherit_form_view" model="ir.ui.view">
-            <field name="name">sale_type_inherit_form_view</field>
-            <field name="model">sale.type</field>
-            <field name="inherit_id" ref="amcl_sales_customisation.sale_type_form"/>
-            <field name="arch" type="xml">
-
-                <xpath expr="//field[@name='company_id']" position="after">
-                    <!-- Add your fields or attributes here -->
-                    <field name="ext_id"/>
-                    <field name="auto_reservation"/>
-                </xpath>
-
-            </field>
-        </record>
-
 
         <record id="inherit_sale_order_form_view_for_attach_ext" model="ir.ui.view">
             <field name="name">sale.order.form</field>

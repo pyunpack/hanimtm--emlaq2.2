@@ -24,17 +24,6 @@ class AbstractBankReport(models.AbstractModel):
         return docargs
 
 
-class SaleType(models.Model):
-    _inherit = 'sale.type'
-    _description = 'add ext id'
-    _sql_constraints = [
-        ('uniq_name', 'unique(ext_id)', "This ext id already exists with this name . ext id name must be unique!"),
-    ]
-
-    ext_id = fields.Integer(string='Ext ID')
-    auto_reservation = fields.Boolean(default=False)
-
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
