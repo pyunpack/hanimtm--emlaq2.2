@@ -23,3 +23,4 @@ class StockQuant(models.Model):
     product_vehicle_model = fields.Char(related='product_id.product_tmpl_id.vehicle_model', store=1)
     product_vc = fields.Char(related='product_id.product_tmpl_id.product_vc', store=1)
     product_transmission_type = fields.Selection(related='product_id.product_tmpl_id.transmission_type', store=1)
+
