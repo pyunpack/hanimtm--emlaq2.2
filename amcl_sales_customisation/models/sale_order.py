@@ -34,12 +34,12 @@ class SaleOrder(models.Model):
             self.action_done()
         return True
 
-    @api.onchange('partner_id')
-    def onchange_partner_id(self):
-        res = super(SaleOrder, self).onchange_partner_id()
-        if self.partner_id.sales_type_id:
-            self.sales_type_id = self.partner_id.sales_type_id
-        return res
+    # @api.onchange('partner_id')
+    # def onchange_partner_id(self):
+    #     res = super(SaleOrder, self).onchange_partner_id()
+    #     if self.partner_id.sales_type_id:
+    #         self.sales_type_id = self.partner_id.sales_type_id
+    #     return res
 
     @api.onchange('id_no')
     def onchange_id_no(self):
