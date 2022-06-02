@@ -30,7 +30,7 @@ class SaleOrder(models.Model):
     partner_tax = fields.Char(related='partner_id.vat', store=1)
 
     sale_type_ext_id = fields.Integer(related='sales_type_id.ext_id', store=1)
-    auto_reservation = fields.Boolean(related='sales_type_id.auto_reservation', store=1)
+    # auto_reservation = fields.Boolean(related='sales_type_id.auto_reservation', store=1)
     customer_gender = fields.Selection(related='partner_id.gender')
 
     car_user_id = fields.Many2one(comodel_name='res.partner', string='Car User')
@@ -230,13 +230,13 @@ class SaleOrder(models.Model):
                 else:
                     raise ValidationError("All the quantities are reserved")
 
-    @api.model
-    def create(self, vals):
-        # return super(SaleOrder, self).create(vals).action_create_stock_reservation_direct()
-
-        res = super(SaleOrder, self).create(vals)
-        if res.auto_reservation == True:
-            res.test_reserve_auto()
-        # else:
-        return res
+    # @api.model
+    # def create(self, vals):
+    #     # return super(SaleOrder, self).create(vals).action_create_stock_reservation_direct()
+    #
+    #     res = super(SaleOrder, self).create(vals)
+    #     if res.auto_reservation == True:
+    #         res.test_reserve_auto()
+    #     # else:
+    #     return res
 

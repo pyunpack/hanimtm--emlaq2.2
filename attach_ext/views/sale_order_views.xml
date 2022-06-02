@@ -20,7 +20,7 @@
                            attrs="{'invisible': [('sale_type_ext_id', '!=', 1)]}"/>
                     <field name="car_user_id" attrs="{'required': [('sale_type_ext_id', '=', 3)],
                     'invisible': [('sale_type_ext_id', '!=', 3)]}"/>
-                    <field name="auto_reservation"/>
+<!--                    <field name="auto_reservation"/>-->
                 </xpath>
 
                 <xpath expr="//header/button[@name='action_cancel']" position="after">
