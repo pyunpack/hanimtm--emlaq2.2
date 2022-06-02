@@ -7,7 +7,7 @@ from odoo.osv import expression
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    sales_type_id = fields.Many2one('sale.type', required=True, string='Sales Type')
+    # sales_type_id = fields.Many2one('sale.type', required=True, string='Sales Type')
 
     @api.model
     def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):

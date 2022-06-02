@@ -20,6 +20,7 @@
                     <sheet>
                         <group class="col-12">
                             <field name="name"/>
+                            <field name="allowed_users" widget="many2many_tags" required="1"/>
                         </group>
                         <group class="col-6">
                             <field name="income_account"/>

@@ -26,7 +26,7 @@
                 <field name="id_no" context="{'only_id_no': True}"/>
             </xpath>
             <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="sales_type_id" required="True" options="{'no_open': True}"/>
+                <field name="sales_type_id" required="True" options="{'no_open': True}" domain="[('allowed_users','in',[uid])]"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">

@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='category_id']" position="after">
                     <field name="customer_rank" invisible="1"/>
-                    <field name="sales_type_id" attrs="{'invisible': [('customer_rank', '>', '1')]}"/>
+<!--                    <field name="sales_type_id" attrs="{'invisible': [('customer_rank', '>', '1')]}"/>-->
                 </xpath>
 
             <xpath expr="//field[@name='ref']" position="attributes">

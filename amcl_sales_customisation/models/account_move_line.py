@@ -28,10 +28,10 @@ class AccountMoveInherit(models.Model):
             if not move.anglo_saxon:
                 move.env['account.move.line'].create(self._stock_account_prepare_anglo_saxon_out_lines_vals_new())
                 move.write({'anglo_saxon': True})
-
         posted = super()._post(soft)
 
         posted._stock_account_anglo_saxon_reconcile_valuation()
+
         return posted
 
     def _stock_account_prepare_anglo_saxon_out_lines_vals_new(self):
