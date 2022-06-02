@@ -31,7 +31,7 @@ class ImportPoWizard(models.TransientModel):
     ], default="name", string="Product By", required=True)
     is_create_vendor = fields.Boolean(string="Create Vendor?")
     is_confirm_order = fields.Boolean(string="Auto Confirm Order?")
-    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
     branch_id = fields.Many2one('company.branch', string="Branch")
     product_categ_id = fields.Many2one('product.category', string='Product Category')
     sequence_id = fields.Char('Sequence', default=lambda self: str(uuid.uuid4()))
@@ -167,7 +167,7 @@ class ImportPoWizard(models.TransientModel):
                                         'brand': str(sheet.cell(row, 7).value).split('.')[0],
                                         'standard_price': float(sheet.cell(row, 5).value),
                                         'sales_document': str(sheet.cell(row, 3).value).split('.')[0],
-                                        'company_id': self.company_id.id,
+                                        # 'company_id': self.company_id.id,
                                         'branch_id': self.branch_id.id,
                                         'categ_id': self.product_categ_id.id,
                                     })
@@ -195,7 +195,7 @@ class ImportPoWizard(models.TransientModel):
                                         'sales_document': str(sheet.cell(row, 3).value).split('.')[0],
                                         'item': str(sheet.cell(row, 4).value).split('.')[0],
                                         # 'order_id': created_po.id,
-                                        'company_id': self.company_id.id,
+                                        # 'company_id': self.company_id.id,
                                         'branch_id': self.branch_id.id
                                     }))
                                     # created_pol = pol_obj.create(vals)
@@ -243,7 +243,7 @@ class ImportPoWizard(models.TransientModel):
                 confirm_rec = len(created_po_list_for_confirm)
 
             res = self.show_success_msg(counter, confirm_rec, skipped_line_no, existing_product_list,
-                                                no_partner,  False)
+                                        no_partner, False)
             return res
         else:
             res = self.show_success_msg(counter, False, skipped_line_no, existing_product_list,
