@@ -10,10 +10,11 @@
     """,
     'author': 'Aneesh.AV',
     'depends': [
-        'odoo_stock_reservation'
+        'odoo_stock_reservation','amcl_sales_customisation'
     ],
     'data': [
         'views/sale_order_view.xml',
+        'views/sale_type_view.xml',
     ],
     'installable': True,
     'application': False,

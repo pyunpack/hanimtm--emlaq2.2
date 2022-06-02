@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sale_type" model="ir.ui.view">
+            <field name="name">sale.type</field>
+            <field name="model">sale.type</field>
+            <field name="inherit_id" ref="amcl_sales_customisation.sale_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="replace">
+                    <field name="allow_auto_reservation"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

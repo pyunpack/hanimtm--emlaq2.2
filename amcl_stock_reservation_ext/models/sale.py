@@ -2,13 +2,20 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from dateutil.relativedelta import relativedelta
+
 import logging
 _logger = logging.getLogger(__name__)
 
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    @api.onchange('sales_type_id')
+    def onchange_allow_auto_reservation(self):
+        if self.sales_type_id.allow_auto_reservation:
+            self.action_create_stock_reservation_direct()
+        else:
+            self.action_cancel_stock_reservation()
+
 
     def action_create_stock_reservation_direct(self):
         custome_reservtion_obj = self.env['stock.move.reservation']
@@ -18,7 +25,6 @@ class SaleOrder(models.Model):
         mail_context = []
 
         for line in self.order_line:
-            print(line.product_id.is_reservation)
             if line.product_uom_qty > 0 and line.product_id.detailed_type != 'service' and not line.product_id.is_reservation:
 
                 order_line_reserve_qty = line.product_uom_qty
