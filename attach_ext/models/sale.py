@@ -24,19 +24,13 @@ class AbstractBankReport(models.AbstractModel):
         return docargs
 
 
-class SaleTypeInherit(models.Model):
-    _inherit = 'sale.type'
-
-    auto_reservation = fields.Boolean(default=False)
-
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     partner_tax = fields.Char(related='partner_id.vat', store=1)
 
     sale_type_ext_id = fields.Integer(related='sales_type_id.ext_id', store=1)
-    auto_reservation = fields.Boolean(related='sales_type_id.auto_reservation', store=1)
+    auto_reservation = fields.Boolean(related='sales_type_id.allow_auto_reservation', store=1)
     customer_gender = fields.Selection(related='partner_id.gender')
 
     car_user_id = fields.Many2one(comodel_name='res.partner', string='Car User')
