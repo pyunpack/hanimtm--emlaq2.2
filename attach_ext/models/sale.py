@@ -24,6 +24,12 @@ class AbstractBankReport(models.AbstractModel):
         return docargs
 
 
+class SaleTypeInherit(models.Model):
+    _inherit = 'sale.type'
+
+    auto_reservation = fields.Boolean(default=False)
+
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
