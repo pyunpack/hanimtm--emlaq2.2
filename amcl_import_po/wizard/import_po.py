@@ -155,6 +155,7 @@ class ImportPoWizard(models.TransientModel):
                                         'model_year': str(sheet.cell(row, 13).value).split('.')[0],
                                         'grade': str(sheet.cell(row, 12).value).split('.')[0],
                                         'default_code': str(sheet.cell(row, 0).value).split('.')[0],
+                                        'barcode': str(sheet.cell(row, 0).value).split('.')[0],
                                         'exterior_color_code': str(sheet.cell(row, 8).value).split('.')[0],
                                         'exterior_color': str(sheet.cell(row, 9).value).split('.')[0],
                                         'interior_color_code': str(sheet.cell(row, 10).value).split('.')[0],
@@ -171,8 +172,13 @@ class ImportPoWizard(models.TransientModel):
                                     })
 
                                 if search_product:
-                                    search_product.sudo().branch_id = self.branch_id.id
-                                    search_product.sudo().barcode = str(sheet.cell(row, 0).value).split('.')[0]
+                                    print('Branch ID :: ', self.branch_id.id)
+                                    search_product.sudo().product_tmpl_id.branch_id = [(5, 0)]
+                                    search_product.sudo().product_tmpl_id.branch_id = [(6, 0, [self.branch_id.id])]
+                                    print('search_product.sudo().product_tmpl_id.branch_id ::',
+                                          search_product.sudo().product_tmpl_id.branch_id)
+                                    search_product.sudo().product_tmpl_id.barcode = \
+                                    str(sheet.cell(row, 0).value).split('.')[0]
                                     lines.append((0, 0, {
                                         'product_id': search_product.id,
                                         'name': str(search_product.name),
@@ -191,7 +197,6 @@ class ImportPoWizard(models.TransientModel):
                                         'brand': str(sheet.cell(row, 7).value).split('.')[0],
                                         'sales_document': str(sheet.cell(row, 3).value).split('.')[0],
                                         'item': str(sheet.cell(row, 4).value).split('.')[0],
-                                        'barcode': str(sheet.cell(row, 0).value).split('.')[0],
                                         # 'order_id': created_po.id,
                                         # 'company_id': self.company_id.id,
                                         'branch_id': self.branch_id.id
