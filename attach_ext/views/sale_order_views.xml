@@ -11,7 +11,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='validity_date']" position="before">
-                    <field name="partner_tax" invisible="0"/>
+                    <field name="partner_tax" invisible="1"/>
                 </xpath>
 
                 <xpath expr="//field[@name='sales_type_id']" position="after">
@@ -20,7 +20,7 @@
                            attrs="{'invisible': [('sale_type_ext_id', '!=', 1)]}"/>
                     <field name="car_user_id" attrs="{'required': [('sale_type_ext_id', '=', 3)],
                     'invisible': [('sale_type_ext_id', '!=', 3)]}"/>
-<!--                    <field name="auto_reservation"/>-->
+                    <field name="auto_reservation" invisible="1"/>
                 </xpath>
 
                 <xpath expr="//header/button[@name='action_cancel']" position="after">

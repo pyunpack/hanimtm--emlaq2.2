@@ -59,6 +59,19 @@
             </field>
         </record>
 
+        <record id="stock_barcode.stock_picking_type_action_kanban" model="ir.actions.act_window">
+            <field name="domain">
+                [('code', 'in', ('incoming', 'outgoing', 'internal')), ('user_ids', 'in', [uid])]
+            </field>
+        </record>
+
+
+        <record id="stock_barcode.stock_picking_action_kanban" model="ir.actions.act_window">
+            <field name="domain">
+                [('picking_type_id.user_ids', 'in', [uid]), ('location_dest_id.user_ids', 'in', [uid])]
+            </field>
+        </record>
+
 
     </data>
 </odoo>
