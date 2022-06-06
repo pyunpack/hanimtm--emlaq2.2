@@ -172,13 +172,24 @@ class ImportPoWizard(models.TransientModel):
                                     })
 
                                 if search_product:
-                                    print('Branch ID :: ', self.branch_id.id)
                                     search_product.sudo().product_tmpl_id.branch_id = [(5, 0)]
                                     search_product.sudo().product_tmpl_id.branch_id = [(6, 0, [self.branch_id.id])]
-                                    print('search_product.sudo().product_tmpl_id.branch_id ::',
-                                          search_product.sudo().product_tmpl_id.branch_id)
-                                    search_product.sudo().product_tmpl_id.barcode = \
-                                    str(sheet.cell(row, 0).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.model_year = str(sheet.cell(row, 13).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.grade = str(sheet.cell(row, 12).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.default_code = str(sheet.cell(row, 0).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.barcode = str(sheet.cell(row, 0).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.exterior_color_code = str(sheet.cell(row, 8).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.exterior_color = str(sheet.cell(row, 9).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.interior_color_code = str(sheet.cell(row, 10).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.item = str(sheet.cell(row, 4).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.interior_color = str(sheet.cell(row, 11).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.alj_suffix = str(sheet.cell(row, 6).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.vehicle_model = str(sheet.cell(row, 1).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.brand = str(sheet.cell(row, 7).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.standard_price = float(sheet.cell(row, 5).value)
+                                    search_product.sudo().product_tmpl_id.sales_document = str(sheet.cell(row, 3).value).split('.')[0]
+                                    search_product.sudo().product_tmpl_id.categ_id = self.product_categ_id.id
+                                    search_product.sudo().product_tmpl_id.barcode = str(sheet.cell(row, 0).value).split('.')[0]
                                     lines.append((0, 0, {
                                         'product_id': search_product.id,
                                         'name': str(search_product.name),

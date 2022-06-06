@@ -104,11 +104,23 @@ class ImportPoWizard(models.TransientModel):
                                                 'vessel_no': str(sheet.cell(row, 8).value).split('.')[0] or "",
                                                 'card_no': str(sheet.cell(row, 9).value).split('.')[0] or "",
                                                 })
+                                    move.product_id.sudo().write({
+                                        'product_vc': sheet.cell(row, 0).value.split('.')[0] or "",
+                                        'key_number': move.key_number,
+                                        'vessel_no': move.vessel_no,
+                                        'card_no': move.card_no,
+                                        'billing_document': move.billing_document,
+                                        'complete_engine_number': move.complete_engine_number,
+                                        'bill_date': move.bill_date,
+                                    })
                                     move.product_id.product_tmpl_id.sudo().write({
                                         'product_vc': sheet.cell(row, 0).value.split('.')[0] or "",
                                         'key_number': move.key_number,
                                         'vessel_no': move.vessel_no,
                                         'card_no': move.card_no,
+                                        'billing_document': move.billing_document,
+                                        'complete_engine_number': move.complete_engine_number,
+                                        'bill_date':move.bill_date,
                                     })
                                     if move.purchase_line_id:
                                         move.purchase_line_id.sudo().write({
