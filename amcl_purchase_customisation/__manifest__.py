@@ -3,10 +3,10 @@
 {
     'name': 'Alemlaq Purchase Customisation',
     'author': 'AMCL',
-    'category': 'Sales',
-    'summary': 'Sales Customisation',
+    'category': 'Purchase',
+    'summary': 'Purchase Customisation',
     'description': '''
-        Sales Customisation
+        Purchase Customisation
                     ''',
     'version': '15.0.1',
     'depends': ['purchase'],

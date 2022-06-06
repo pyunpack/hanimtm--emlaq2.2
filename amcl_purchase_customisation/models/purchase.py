@@ -34,15 +34,18 @@ class PurchaseOrder(models.Model):
                     document = line.billing_document
                 AccountMove = self.env['account.move'].with_context(default_move_type='in_invoice')
                 for vals in invoice_vals_list:
-                    if self.env['account.move'].search([('ref', '=', document)]):
-                        raise ValidationError(
-                            _('Bill document %s is already available in Vendor Bill.\n'
-                              'Kindly check the Bill document', document)
-                        )
-                    if not self.env['account.move'].search([('ref', '=', document)]):
-                        invoice = AccountMove.with_company(vals['company_id']).create(vals)
-                        invoice.write({'invoice_date': dat})
-                        moves |= invoice
+                    invoice = AccountMove.with_company(vals['company_id']).create(vals)
+                    invoice.write({'invoice_date': dat})
+                    moves |= invoice
+                    # if self.env['account.move'].search([('ref', '=', document)]):
+                    #     raise ValidationError(
+                    #         _('Bill document %s is already available in Vendor Bill.\n'
+                    #           'Kindly check the Bill document', document)
+                    #     )
+                    # if not self.env['account.move'].search([('ref', '=', document)]):
+                    #     invoice = AccountMove.with_company(vals['company_id']).create(vals)
+                    #     invoice.write({'invoice_date': dat})
+                    #     moves |= invoice
 
             moves.filtered(
                 lambda m: m.currency_id.round(m.amount_total) < 0).action_switch_invoice_into_refund_credit_note()
