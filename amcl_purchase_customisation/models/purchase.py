@@ -1,4 +1,4 @@
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from odoo import fields, models, api, _
 from odoo.tools import float_is_zero
@@ -18,7 +18,9 @@ class PurchaseOrder(models.Model):
                 continue
             order = order.with_company(order.company_id)
             grouped_po_lines = groupby(order.order_line.sorted('billing_document'), key=lambda l: l.billing_document)
+
             for product, po_lines in grouped_po_lines:
+
                 invoice_vals_list = []
                 invoice_vals = order._prepare_invoice()
                 dat = False
@@ -32,8 +34,12 @@ class PurchaseOrder(models.Model):
                     document = line.billing_document
                 AccountMove = self.env['account.move'].with_context(default_move_type='in_invoice')
                 for vals in invoice_vals_list:
-                    if not self.env['account.move'].search([('ref','=',document)]):
-                        print(vals)
+                    if self.env['account.move'].search([('ref', '=', document)]):
+                        raise ValidationError(
+                            _('Bill document %s is already available in Vendor Bill.\n'
+                              'Kindly check the Bill document', document)
+                        )
+                    if not self.env['account.move'].search([('ref', '=', document)]):
                         invoice = AccountMove.with_company(vals['company_id']).create(vals)
                         invoice.write({'invoice_date': dat})
                         moves |= invoice
