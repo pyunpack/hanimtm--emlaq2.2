@@ -10,7 +10,8 @@ class SaleOrder(models.Model):
     @api.onchange('sales_type_id')
     def _onchange_sales_type_id(self):
         for line in self.order_line:
-            line.product_id_change()
+            if line.product_id:
+                line.product_id_change()
 
     def action_create_request(self):
         self.ensure_one()
@@ -35,44 +36,46 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('price_unit')
     def onchange_unit_price_change(self):
-        margin = self.product_id.margin_price
-        approvals = self.env['sale.price.approval'].sudo().search(
-            [('company_id', '=', self.env.company.id)], order='id ASC')[0]
-        rule = False
-        if approvals:
-            for line in approvals.line_id:
-                users = line.mapped('user_ids')
-                if self.env.user in users:
-                    rule = line.condition
-                    break
+        price = self._get_display_price(self.product_id)
+        if self.product_id and self.price_unit != price:
+            margin = self.product_id.margin_price
+            approvals = self.env['sale.price.approval'].sudo().search(
+                [('company_id', '=', self.env.company.id)], order='id ASC')[0]
+            rule = False
+            if approvals:
+                for line in approvals.line_id:
+                    users = line.mapped('user_ids')
+                    if self.env.user in users:
+                        rule = line.condition
+                        break
 
-            if rule == 'normal' and self.price_unit != margin:
+                if rule == 'normal' and self.price_unit != margin:
+                    self.write({'price_unit': margin})
+                    raise UserError(
+                        _('You dont have authority to change the price.\n'
+                          'To change the price, please submit the request')
+                    )
+                elif rule == 'senior':
+                    if self.price_unit > self.product_id.standard_price:
+                        self.write({'price_unit': self.price_unit})
+                    else:
+                        raise UserError(
+                            _('You can not enter a Unit Price, equal to the cost price.\n'
+                              'To change the price, please submit the request')
+                        )
+                elif rule == 'manager':
+                    if self.price_unit >= self.product_id.standard_price:
+                        self.write({'price_unit': self.price_unit})
+                    else:
+                        raise UserError(
+                            _('You can not enter a Unit Price, less than the cost price.\n'
+                              'To change the price, please submit the request')
+                        )
+                elif rule == 'owner':
+                    self.write({'price_unit': self.price_unit})
+
+            else:
                 self.write({'price_unit': margin})
-                raise UserError(
-                    _('You dont have authority to change the price.\n'
-                      'To change the price, please submit the request')
-                )
-            elif rule == 'senior':
-                if self.price_unit > self.product_id.standard_price:
-                    self.write({'price_unit': self.price_unit})
-                else:
-                    raise UserError(
-                        _('You can not enter a Unit Price, equal to the cost price.\n'
-                          'To change the price, please submit the request')
-                    )
-            elif rule == 'manager':
-                if self.price_unit >= self.product_id.standard_price:
-                    self.write({'price_unit': self.price_unit})
-                else:
-                    raise UserError(
-                        _('You can not enter a Unit Price, less than the cost price.\n'
-                          'To change the price, please submit the request')
-                    )
-            elif rule == 'owner':
-                self.write({'price_unit': self.price_unit})
-
-        else:
-            self.write({'price_unit': margin})
 
         # if margin > 0 and self.env.user.has_group(
         #         'sales_team.group_sale_salesman') and (
