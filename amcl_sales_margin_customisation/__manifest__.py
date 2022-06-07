@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 
 {
     'name': 'Alemlaq Sale Margin Customisation',
@@ -12,10 +12,15 @@
     'depends': ['sale_management','sales_team'],
     'application': True,
     'data': [
+            'wizard/price_change_request_view.xml',
             'views/globalmargin.xml',
             'views/product.xml',
+            'views/sale_price_approval.xml',
+            'views/price_approval_view.xml',
+            'views/sale_order_views.xml',
             'security/ir.model.access.csv',
             'data/data.xml',
+
     ],
     'license': 'LGPL-3',
     'auto_install': False,

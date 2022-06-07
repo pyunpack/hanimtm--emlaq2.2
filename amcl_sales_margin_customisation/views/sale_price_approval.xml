@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_price_approval" model="ir.ui.view">
+            <field name="name">sale.price.approval.form</field>
+            <field name="model">sale.price.approval</field>
+            <field name="arch" type="xml">
+                <form string="Global Margin">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <notebook>
+                            <page string="Approvals">
+                                <field name="line_id" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="approval_id" invisible="1"/>
+                                        <field name="user_ids" widget="many2many_tags"/>
+                                        <field name="condition"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_sale_price_approval_tree" model="ir.ui.view">
+            <field name="name">sale.price.approval.tree</field>
+            <field name="model">sale.price.approval</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Price Approval">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_sale_price_approval" model="ir.actions.act_window">
+            <field name="name">Sale Price Approval</field>
+            <field name="res_model">sale.price.approval</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Sale Price Approval
+                </p>
+                <p>
+                    New Sale Price Approval.
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem name="Sale Price Approval" id="menu_sale_price_approval" parent="sale.menu_sale_config"
+                  action="action_sale_price_approval" sequence="99"/>
+    </data>
+</odoo>
