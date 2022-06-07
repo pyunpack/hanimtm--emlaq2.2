@@ -70,7 +70,7 @@ class StockReservationLine(models.TransientModel):
         store=True
     )
     change_unit = fields.Float(
-        string='Change Price',
+        string='New Unit Price',
     )
     user_ids = fields.Many2many(
         'res.users',

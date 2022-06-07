@@ -35,7 +35,7 @@ class PriceChangeApproval(models.Model):
         required=True,
     )
     change_unit = fields.Float(
-        string='Change Price',
+        string='New Unit Price',
         required=True,
     )
     user_ids = fields.Many2many(
