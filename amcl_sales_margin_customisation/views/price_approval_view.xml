@@ -57,6 +57,7 @@
                     <field name="change_unit"/>
                     <field name="requester_id"/>
                     <field name="company_id"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -69,6 +70,11 @@
                 <search string="Search">
                     <field name="name" string="Customer" filter_domain="[('name', 'ilike', self)]"/>
                     <filter string="My Approvals" domain="[('user_ids','in',[uid]),('state','=', 'send')]" name="my_approval"/>
+                     <group expand="0" string="Group By">
+                        <filter string="Company" name="company" domain="[]" context="{'group_by': 'company_id'}"/>
+                        <filter string="State" name="state" domain="[]" context="{'group_by': 'state'}" />
+                        <filter string="Requester" name="requester_id" domain="[]" context="{'group_by': 'requester_id'}"/>
+                    </group>
                 </search>
             </field>
         </record>
